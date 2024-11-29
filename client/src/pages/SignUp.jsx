@@ -1,14 +1,16 @@
 import SignUpForm from "../features/authentication/SignUpForm";
 
-import AuthPageLayout from "../ui/AuthPageLayout";
-import Header from "../ui/Header";
+import { PageLayout, Wrapper } from "../ui/layouts/Auth";
+import Header from "../ui/components/Header";
 
 function SignUp() {
   return (
-    <AuthPageLayout>
-      <Header />
-      <SignUpForm />
-    </AuthPageLayout>
+    <Wrapper>
+      <PageLayout>
+        <Header />
+        <SignUpForm />
+      </PageLayout>
+    </Wrapper>
   );
 }
 

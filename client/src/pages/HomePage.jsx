@@ -1,12 +1,10 @@
 import styled from "styled-components";
 
-import AppLayout from "../ui/AppLayout";
+import AppLayout from "../ui/layouts/AppLayout";
 
 const StyledHomepage = styled.div`
-  outline: 2px solid blue;
-  width: 100vw;
-  min-width: 300px;
-  height: 100svh;
+  position: relative;
+  min-height: 100svh;
   overflow: hidden;
 `;
 

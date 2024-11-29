@@ -1,69 +1,72 @@
 import { useForm } from "react-hook-form";
+import styled from "styled-components";
+import toast from "react-hot-toast";
 
-import LoginSignUpButton from "../../ui/LoginSignUpButton";
-import AuthFormLayout from "../../ui/AuthFormLayout";
-import FormInput from "../../ui/FormInput";
-import Heading from "../../ui/Heading";
+import { useForgotPassword } from "../../services/auth/useForgotPassword";
+
+import { Form, FormLayout } from "../../ui/layouts/Auth";
+import FormInput from "../../ui/components/FormInput";
+import Heading from "../../ui/components/Heading";
+import Button from "../../ui/components/Button";
+
+const SubmitButtonWrapper = styled.div`
+  width: 100%;
+
+  & button {
+    width: 100%;
+    padding: 1rem;
+  }
+`;
 
 function ForgotPasswordForm() {
+  const { isLoading, mutate } = useForgotPassword();
   const {
     handleSubmit,
     register,
     formState: { errors },
-    getValues,
-    reset,
   } = useForm();
 
   function onSubmit(data) {
-    if (!data.username) return;
-    console.log("reset conplete", data);
-    reset();
+    mutate(data.email, {
+      onSuccess: () => {
+        toast.success("Reset Link sent! Check Inbox to reset password");
+      },
+
+      onError: (err) => {
+        toast.err(err.message);
+      },
+    });
   }
 
   return (
-    <AuthFormLayout onSubmit={handleSubmit(onSubmit)}>
+    <FormLayout onSubmit={handleSubmit(onSubmit)}>
       <Heading as="h3" align="center">
-        Welcome, Let&apos;s Get You SIgned Up
+        Welcome, Let&apos;s Get You Back In
       </Heading>
-      <FormInput
-        label="Current Password"
-        name="current password"
-        placeholder="Input Current Password"
-        type="password"
-        register={{
-          ...register("currentPassword", {
-            minLength: { value: 5, message: "min length is 6" },
-          }),
-        }}
-        error={errors?.username?.message}
-      />
-      <FormInput
-        label="New Password"
-        name="new password"
-        placeholder="Input New Password"
-        type="password"
-        register={{
-          ...register("newPassword", {
-            minLength: { value: 6, message: "min value is 6" },
-          }),
-        }}
-        error={errors?.password?.message}
-      />
-      <FormInput
-        label="Confrim Password"
-        name="confirm password"
-        placeholder="Confirm Password"
-        type="password"
-        register={{
-          ...register("confirmNewPassword", {
-            validate: (value) =>
-              value === getValues().password || "Password doesn't match",
-          }),
-        }}
-        error={errors?.confirmPassword?.message}
-      />
-      <LoginSignUpButton>Reset Password</LoginSignUpButton>
-    </AuthFormLayout>
+
+      <Form>
+        <FormInput
+          label="Email Address"
+          name="email"
+          placeholder="Enter Your Email Address"
+          type="email"
+          register={{
+            ...register("email", {
+              required: {
+                value: true,
+                message: "Please provide a valid email address",
+              },
+            }),
+          }}
+          error={errors?.email?.message}
+        />
+        <SubmitButtonWrapper>
+          <Button type="auth" disabled={isLoading}>
+            Submit
+          </Button>
+        </SubmitButtonWrapper>
+      </Form>
+    </FormLayout>
   );
 }
 

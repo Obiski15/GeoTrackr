@@ -1,14 +1,14 @@
 import LocationHistorySummary from "../features/dashboard/LocationHistorySummary";
-import DashboardStats from "../features/dashboard/DashboardStats";
+import Stats from "../features/dashboard/Stats";
 
-import PageLayout from "../ui/PageLayout";
-import Header from "../ui/Header";
+import PageLayout from "../ui/layouts/PageLayout";
+import Header from "../ui/components/Header";
 
 function Dashboard() {
   return (
     <PageLayout>
       <Header>Dashboard</Header>
-      <DashboardStats />
+      <Stats />
       <LocationHistorySummary />
     </PageLayout>
   );

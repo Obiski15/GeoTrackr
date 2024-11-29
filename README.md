@@ -18,51 +18,15 @@ GeoTrackr is an application designed to track a user's location and keep a recor
 - **styled-components**: Styling is done using styled-components allowing for CSS-in-JS.
 - **Leaflet**: Interactive maps are provided by Leaflet and React Leaflet, an open-source JavaScript library for mobile-friendly maps.
 
-### Backend (still in development application is currently running on a JSON server)
+### Backend
 
-- **Node.js**: The backend server is built using Node.js, a JavaScript runtime built on Chrome's V8 JavaScript engine.
-- **Express**: The web framework for Node.js used to build the backend API.
+- **Node.js**: The backend server is built using Node.js.
 - **MongoDB**: A NoSQL database used for storing user data and location records.
-- **Mongoose**: An ODM (Object Data Modeling) library for MongoDB and Node.js, providing a straightforward, schema-based solution to model the application data.
 
 ## Future Plans
 
-- **Feature Expansion**: More features will be added to enhance the user experience.
-- **Authentication**: Implement user authentication to secure user data and provide personalized experiences.
-- **Backend Development**: Continuously improving the backend to ensure scalability and performance.
-
-## Getting Started
-
-To run the application locally, follow these steps:
-
-1. **Clone the repository**:
-
-   ```bash
-   git clone "URL"
-   cd GeoTrackr
-   ```
-
-2. **Install dependencies**:
-
-   - For the frontend:
-     ```bash
-     cd client
-     npm install
-     ```
-
-3. **Run the JSON server**:
-
-   ```bash
-   cd client
-   npm run server
-   ```
-
-4. **Run the frontend development server**:
-   ```bash
-   cd client
-   npm run dev
-   ```
+- Continuously improving the application to ensure scalability and performance.
 
 ## Credits
 
-- **UI Design**: [Nsikan David](www.github.com/Daviddix)
+- **UI Design**: [Nsikan David](https://www.github.com/Daviddix)

@@ -1,14 +1,16 @@
 import ForgotPasswordForm from "../features/authentication/ForgotPasswordForm";
 
-import AuthPageLayout from "../ui/AuthPageLayout";
-import Header from "../ui/Header";
+import { PageLayout, Wrapper } from "../ui/layouts/Auth";
+import Header from "../ui/components/Header";
 
 function ForgotPassword() {
   return (
-    <AuthPageLayout>
-      <Header />
-      <ForgotPasswordForm />
-    </AuthPageLayout>
+    <Wrapper>
+      <PageLayout>
+        <Header />
+        <ForgotPasswordForm />
+      </PageLayout>
+    </Wrapper>
   );
 }
 

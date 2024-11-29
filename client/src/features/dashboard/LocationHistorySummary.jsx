@@ -1,6 +1,6 @@
 import LocationHistory from "./LocationHistory";
 
-import DashboardLayout from "../../ui/DashboardLayout";
+import DashboardLayout from "../../ui/layouts/DashboardLayout";
 
 function LocationHistorySummary() {
   return (

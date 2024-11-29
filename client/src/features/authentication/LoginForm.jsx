@@ -1,45 +1,73 @@
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { useState } from "react";
 
-import LoginSignUpButton from "../../ui/LoginSignUpButton";
-import AuthFormLayout from "../../ui/AuthFormLayout";
-import FormInput from "../../ui/FormInput";
-import Heading from "../../ui/Heading";
+import { useLogin } from "../../services/auth/useLogin";
+
+import LoginSignUpButton from "../../ui/components/LoginSignUpButton";
+import { Form, FormLayout } from "../../ui/layouts/Auth";
+import FormInput from "../../ui/components/FormInput";
+import Heading from "../../ui/components/Heading";
 
 function LoginForm() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const { loginUser, isLoading } = useLogin();
+  const navigate = useNavigate();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm();
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    if (!username || !password) return toast.error("fields cannot be empty");
-
-    console.log("logged in", username, password);
+  function onSubmit(data) {
+    loginUser(data, {
+      onSuccess: () => {
+        toast.success("Login Successfull. redirecting...");
+        navigate("/");
+      },
+      onError: (err) => {
+        toast.error(err.message);
+      },
+    });
   }
 
   return (
-    <AuthFormLayout onSubmit={handleSubmit}>
+    <FormLayout onSubmit={handleSubmit(onSubmit)}>
       <Heading as="h3" align="center">
         Welcome, Please Log In
       </Heading>
-      <FormInput
-        label="Username"
-        name="username"
-        placeholder="Input Username"
-        type="text"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <FormInput
-        label="Password"
-        name="password"
-        placeholder="Input Password"
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <LoginSignUpButton>Login</LoginSignUpButton>
-    </AuthFormLayout>
+
+      <Form>
+        <FormInput
+          label="Username"
+          name="username"
+          placeholder="Enter Username or Password"
+          type="text"
+          register={{
+            ...register("email", {
+              required: "Kindly Provide Your Email or Username",
+            }),
+          }}
+          error={errors?.email?.message}
+        />
+        <FormInput
+          label="Password"
+          name="password"
+          placeholder="Input Password"
+          type="password"
+          register={{
+            ...register("password", {
+              required: "password field is required",
+              minLength: {
+                value: 8,
+                message: "Minimum Password Length is 8",
+              },
+            }),
+          }}
+          error={errors?.password?.message}
+        />
+        <LoginSignUpButton disabled={isLoading}>Login</LoginSignUpButton>
+      </Form>
+    </FormLayout>
   );
 }
 

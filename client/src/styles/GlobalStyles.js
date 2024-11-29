@@ -14,7 +14,7 @@ const GlobalStyles = createGlobalStyle`
           --accent-color: #3888C3; 
           --lighter-error-color: #FF9999;
           --light-error-color: #FF6666; 
-          --error-color: #ff1e00; 
+          --error: #ff1e00; 
           --background-color-light: #384654;
           --backdrop-color : rgba(255, 255, 255, 0.1);
 
@@ -52,6 +52,10 @@ const GlobalStyles = createGlobalStyle`
     line-height: 1.5;
     font-size: 1.6rem ;
     transition: color 0.3s, background-color 0.3s;
+    min-width: 380px;
+    max-width: 1440px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   button {
@@ -95,6 +99,10 @@ const GlobalStyles = createGlobalStyle`
   .leaflet-layer,
   .leaflet-control-attribution {
     filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+}
+
+.leaflet-container {
+  /* min-width: 100%; */
 }
 `;
 

@@ -16,7 +16,8 @@ export function useWatchPosition() {
 
     const error = (error) => {
       setError(error.message);
-      throw new Error(error.message);
+
+      throw new Error("unable to fetch position");
     };
 
     const watchId = navigator.geolocation.watchPosition(success, error);

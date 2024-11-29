@@ -7,15 +7,16 @@ const {
   addToTimeline,
   deleteTimeline,
   aboutTimeline,
-  checkId,
-  verifyBody,
 } = require("../controllers/timelineController");
+const { protect } = require("../controllers/authController");
 
 const router = express.Router();
 
-router.param("id", checkId);
+router.route("/").get(protect, getTimeline).post(protect, addToTimeline);
 
-router.route("/").get(getTimeline).post(verifyBody, addToTimeline);
-router.route("/:id").get(aboutTimeline).delete(deleteTimeline);
+router
+  .route("/:id")
+  .get(protect, aboutTimeline)
+  .delete(protect, deleteTimeline);
 
 module.exports = router;

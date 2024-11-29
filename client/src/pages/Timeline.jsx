@@ -1,8 +1,8 @@
 import LocationHistory from "../features/dashboard/LocationHistory";
 
-import SearchInput from "../ui/SearchInput";
-import PageLayout from "../ui/PageLayout";
-import Header from "../ui/Header";
+import SearchInput from "../features/dashboard/SearchInput";
+import PageLayout from "../ui/layouts/PageLayout";
+import Header from "../ui/components/Header";
 
 function Timeline() {
   return (

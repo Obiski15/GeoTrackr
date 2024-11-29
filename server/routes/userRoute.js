@@ -1,19 +1,27 @@
-// core modules
 const express = require("express");
 
-// developer modules
+const { getUser, updateUser } = require("../controllers/userController");
 const {
-  getUser,
-  getUsers,
-  deleteUser,
-  updateUser,
-  createUser,
-} = require("../controllers/userController");
+  signup,
+  login,
+  resetPassword,
+  forgotPassword,
+  protect,
+  logout,
+} = require("../controllers/authController");
+const multerUpload = require("../utils/multerUpload");
 
 const router = express.Router();
 
-router.route("/").get(getUsers).post(createUser);
+router.post("/signup", multerUpload().single("image"), signup);
+router.patch("/reset-password/:token", resetPassword);
+router.post("/forgot-password", forgotPassword);
+router.post("/logout", logout);
+router.post("/login", login);
 
-router.route("/:id").get(getUser).post(deleteUser).patch(updateUser);
+router
+  .route("/")
+  .get(protect, getUser)
+  .put(protect, multerUpload().single("image"), updateUser);
 
 module.exports = router;

@@ -2,14 +2,14 @@ import { useEffect, useRef } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-import SearchLocation from "../location/SearchLocation";
-import Watcher from "../location/Watcher";
+import SearchLocation from "./SearchLocation";
+import Watcher from "./Watcher";
 
-import VisitDashboard from "../../ui/VisitDashboard";
-import PanelIcons from "../../ui/PanelIcons";
-import ClosePanel from "../../ui/ClosePanel";
-import UserMenu from "../../ui/UserMenu";
-import Theme from "../../ui/Theme";
+import VisitDashboard from "./VisitDashboard";
+import PanelIcons from "./PanelIcons";
+import ClosePanel from "./ClosePanel";
+import UserMenu from "./UserMenu";
+import Theme from "./Theme";
 
 const StyledSidePanel = styled.div`
   width: 100%;

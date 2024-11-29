@@ -1,34 +1,36 @@
-exports.getUsers = (req, res) => {
-  res.status(500).json({
-    status: "error",
-    data: "route not yet defined",
-  });
-};
+const catchAsync = require("../utils/catchAsync");
+const User = require("../models/userModel");
 
-exports.getUser = (req, res) => {
-  res.status(500).json({
-    status: "error",
-    data: "route not yet defined",
-  });
-};
+const uploadImage = require("../utils/uploadImage");
+const AppError = require("../utils/AppError");
 
-exports.deleteUser = (req, res) => {
-  res.status(500).json({
-    status: "error",
-    data: "route not yet defined",
+exports.getUser = catchAsync(async (req, res, next) => {
+  res.status(200).json({
+    status: "success",
+    data: {
+      user: req.user,
+    },
   });
-};
+});
 
-exports.createUser = (req, res) => {
-  res.status(500).json({
-    status: "error",
-    data: "route not yet defined",
-  });
-};
+exports.updateUser = catchAsync(async (req, res, next) => {
+  const { username } = req.body;
+  const imageFile = req.file;
 
-exports.updateUser = (req, res) => {
-  res.status(500).json({
-    status: "error",
-    data: "route not yet defined",
+  if (!username) return next(new AppError("Username not provided", 400));
+
+  const image = imageFile ? await uploadImage(imageFile, next) : req.user.image;
+
+  const user = await User.findByIdAndUpdate(
+    req.user._id,
+    { username, image },
+    { runValidators: true },
+  );
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      user,
+    },
   });
-};
+});

@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect } from "react";
-import { useLocalStorage } from "../hooks/useLocalStorage";
 import PropTypes from "prop-types";
+
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 const ThemeContext = createContext();
 
@@ -11,7 +12,9 @@ function ThemeProvider({ children }) {
     if (activeTheme === "light-mode") {
       document.documentElement.classList.add("light-mode");
       document.documentElement.classList.remove("dark-mode");
-    } else {
+    }
+
+    if (activeTheme === "dark-mode") {
       document.documentElement.classList.add("dark-mode");
       document.documentElement.classList.remove("light-mode");
     }
@@ -27,7 +30,7 @@ function ThemeProvider({ children }) {
 function useThemeContext() {
   const mode = useContext(ThemeContext);
 
-  if (mode === undefined)
+  if (!mode)
     throw new Error("Theme context is been used outside of it's provider");
 
   return mode;

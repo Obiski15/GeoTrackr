@@ -2,8 +2,8 @@ import { IoMdArrowDropleft, IoMdArrowDropright } from "react-icons/io";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-import ButtonIcon from "../../ui/ButtonIcon";
-import Tooltip from "../../ui/Tooltip";
+import ButtonIcon from "../../ui/components/ButtonIcon";
+import Tooltip from "./Tooltip";
 
 const StyledPanelControl = styled.div`
   position: absolute;

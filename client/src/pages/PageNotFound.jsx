@@ -2,9 +2,9 @@ import { HiOutlineArrowUpRight } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import PageLayout from "../ui/PageLayout";
-import Heading from "../ui/Heading";
-import Button from "../ui/Button";
+import PageLayout from "../ui/layouts/PageLayout";
+import Heading from "../ui/components/Heading";
+import Button from "../ui/components/Button";
 
 const StyledPageNotFound = styled.div`
   display: flex;

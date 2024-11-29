@@ -1,20 +1,40 @@
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-import { useLocation } from "../location/useLocation";
+import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
+import { IoMdLocate } from "react-icons/io";
+import styled from "styled-components";
 import toast from "react-hot-toast";
 import PropTypes from "prop-types";
 import { useEffect } from "react";
 import L from "leaflet";
 
-import { formatDate, getCountryFlagEmoji } from "../../utils/helpers";
-import { useTimeline } from "../dashboard/useTimeline";
+import { useLocation } from "../../services/location/useLocation";
+import { useTimeline } from "../../services/timeline/useTimeline";
+import { formatDate } from "../../utils/helpers";
 
-import ChangeCenter from "./ChangeCenter";
-import LocateMe from "./LocateMe";
+import ButtonIcon from "../../ui/components/ButtonIcon";
 
 //leaflet style
 import "leaflet/dist/leaflet.css";
+import { useNavigate } from "react-router-dom";
+
+const StyledLocateMe = styled.div`
+  position: absolute;
+  z-index: 999;
+  top: 10rem;
+  left: 1rem;
+`;
+
+function getCountryFlagEmoji(countryCode) {
+  if (!countryCode) return;
+
+  const codePoints = countryCode
+    .toUpperCase()
+    .split("")
+    .map((char) => 127397 + char.charCodeAt());
+  return String.fromCodePoint(...codePoints);
+}
 
 function Map({ currentPosition }) {
+  const { data: timeline, error: timelineError } = useTimeline();
   const {
     data: {
       locality,
@@ -23,10 +43,9 @@ function Map({ currentPosition }) {
       countryCode: currentLocationCountryCode,
     },
     error: LocationError,
-    isLoading,
+    isLoading: isLoadingCurrentLocation,
   } = useLocation(currentPosition);
-
-  const { data: timeline, error: timelineError } = useTimeline();
+  const navigate = useNavigate();
 
   var redMarker = L.icon({
     iconUrl: "/red-marker.svg",
@@ -36,18 +55,20 @@ function Map({ currentPosition }) {
   });
 
   useEffect(() => {
-    if (timelineError)
-      toast.error(
-        "Unable to fetch Location history. Reload page to try again "
-      );
-  }, [timelineError]);
+    if (timelineError) {
+      if (timelineError.code.toString().startsWith("5")) {
+        toast.error(timelineError.message);
+        navigate("/error");
+      }
+    }
+  }, [timelineError, navigate]);
 
   return (
     <MapContainer
       center={currentPosition}
-      zoom={10}
+      zoom={15}
       scrollWheelZoom={false}
-      style={{ width: "100vw", minWidth: "300px", height: "100svh" }}
+      style={{ width: "100vw", minWidth: "380px", minHeight: "100svh" }}
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -55,7 +76,7 @@ function Map({ currentPosition }) {
       />
       <Marker position={currentPosition} icon={redMarker}>
         <Popup autoPan={true} autoClose={false} closeOnClick={false}>
-          {isLoading
+          {isLoadingCurrentLocation
             ? "loading...."
             : LocationError
             ? `${LocationError.message}`
@@ -65,23 +86,53 @@ function Map({ currentPosition }) {
         </Popup>
       </Marker>
 
-      {timeline?.map((data, i) => (
-        <Marker position={data.position} key={i + 1}>
+      {timeline?.data?.timeline?.map((data, i) => (
+        <Marker position={data?.position} key={i + 1}>
           <Popup autoPan={true} autoClose={false} closeOnClick={false}>
             <p>
-              {getCountryFlagEmoji(data.countryCode)} | {data.category} |{" "}
-              {formatDate(data.date)}
+              {getCountryFlagEmoji(data?.countryCode)} | {data?.category} |{" "}
+              {formatDate(data?.createdAt)}
             </p>
 
-            <p>{data.address}</p>
+            <p>{data?.address}</p>
           </Popup>
         </Marker>
       ))}
-      <LocateMe currentPosition={currentPosition} />
+      <LocateMe position={currentPosition} />
       <ChangeCenter position={currentPosition} />
     </MapContainer>
   );
 }
+
+function LocateMe({ position }) {
+  const map = useMap();
+
+  function handleClick() {
+    map.flyTo(position);
+  }
+
+  return (
+    <StyledLocateMe>
+      <ButtonIcon onClick={handleClick} type="secondary">
+        <IoMdLocate />
+      </ButtonIcon>
+    </StyledLocateMe>
+  );
+}
+
+function ChangeCenter({ position }) {
+  const map = useMap();
+  map.setView(position);
+  return null;
+}
+
+ChangeCenter.propTypes = {
+  position: PropTypes.array,
+};
+
+LocateMe.propTypes = {
+  position: PropTypes.array,
+};
 
 Map.propTypes = {
   currentPosition: PropTypes.array.isRequired,

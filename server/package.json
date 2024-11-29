@@ -4,27 +4,44 @@
   "description": "server for geotrackr, location tracking application",
   "main": "app.js",
   "scripts": {
-    "start:dev": "nodemon server.js",
+    "start": "nodemon server.js",
     "start:prod": "cross-env NODE_ENV=production nodemon server.js"
   },
   "author": "Obi Emmanuel",
   "license": "ISC",
   "devDependencies": {
+    "cross-env": "^7.0.3",
+    "eslint": "^8.57.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-import": "^2.30.0",
     "eslint-plugin-jsx-a11y": "^6.9.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^5.1.3",
     "eslint-plugin-react": "^7.34.3",
-    "eslint": "^8.2.0",
-    "prettier": "^3.3.2",
-    "cross-env": "^7.0.3"
+    "prettier": "^3.3.2"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^2.5.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "express-mongo-sanitize": "^2.2.0",
+    "express-rate-limit": "^7.4.0",
+    "helmet": "^7.1.0",
+    "hpp": "^0.2.3",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.4",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.15",
+    "sharp": "^0.33.5",
+    "validator": "^13.12.0",
+    "xss-clean": "^0.1.4"
+  },
+  "engines": {
+    "node": ">=20.0.0"
   }
 }
