@@ -95,7 +95,7 @@ function UserMenu() {
               </Heading>
 
               {!user ? (
-                userError && !userError.code.toString().startsWith("5") ? (
+                userError && !userError?.code?.toString()?.startsWith("5") ? (
                   <Buttons>
                     <Button type="auth" onClick={() => navigate("/auth/login")}>
                       Login

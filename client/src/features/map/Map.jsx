@@ -56,7 +56,7 @@ function Map({ currentPosition }) {
 
   useEffect(() => {
     if (timelineError) {
-      if (timelineError.code.toString().startsWith("5")) {
+      if (timelineError?.code?.toString()?.startsWith("5")) {
         toast.error(timelineError.message);
         navigate("/error");
       }

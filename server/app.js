@@ -36,7 +36,10 @@ app.use("/api", limiter);
 // body parser - reading data from the body into req.body
 app.use(express.json({ limit: "10kb" }));
 
-const allowedOrigins = ["http://localhost:5173"];
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://geo-trackr.vercel.app",
+];
 
 app.use(
   cors({
