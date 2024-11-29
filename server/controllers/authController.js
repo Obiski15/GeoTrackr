@@ -20,6 +20,7 @@ function createSendToken(user, statusCode, res) {
   const cookieOptions = {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
+    sameSite: "None",
     expires: new Date(
       Date.now() + +process.env.COOKIE_JWT_EXPIRES_IN * 24 * 60 * 60 * 1000,
     ),
